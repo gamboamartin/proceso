@@ -1,6 +1,6 @@
 {
-  "name": "gamboa.martin/organigrama",
-  "description": "Organigrama de una empresa",
+  "name": "gamboa.martin/proceso",
+  "description": "Proceso de una empresa",
   "type": "library",
   "license": "GPL-3.0-or-later",
   "authors": [
