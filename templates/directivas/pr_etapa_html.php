@@ -115,7 +115,7 @@ class pr_etapa_html extends html_controler {
         $modelo = new pr_etapa(link: $link);
 
         $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
-            modelo: $modelo, label: 'Deduccion',required: true);
+            modelo: $modelo, label: 'Etapa',required: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
