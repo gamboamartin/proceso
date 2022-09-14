@@ -18,7 +18,7 @@ class pr_periodo_etapa_html extends html_controler {
     {
         $controler->inputs->select = new stdClass();
         $controler->inputs->select->pr_etapa_id = $inputs->selects->pr_etapa_id;
-        $controler->inputs->select->pr_tipo_proceso_id = $inputs->selects->pr_tipo_proceso_id;
+        $controler->inputs->select->nom_perido_id = $inputs->selects->nom_perido_id;
         return $controler->inputs;
     }
 
@@ -113,12 +113,12 @@ class pr_periodo_etapa_html extends html_controler {
         }
         $selects->pr_etapa_id = $select;
 
-        $select = (new pr_tipo_proceso_html(html:$this->html_base))->select_pr_tipo_proceso_id(
+        $select = (new nom_periodo_html(html:$this->html_base))->select_nom_periodo_id(
             cols: 6, con_registros:true, id_selected:-1,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
         }
-        $selects->pr_tipo_proceso_id = $select;
+        $selects->nom_perido_id = $select;
 
         return $selects;
     }

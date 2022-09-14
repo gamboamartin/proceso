@@ -7,5 +7,5 @@
 <?php echo $controlador->inputs->descripcion_select; ?>
 <?php echo $controlador->inputs->alias; ?>
 <?php echo $controlador->inputs->select->pr_etapa_id; ?>
-<?php echo $controlador->inputs->select->pr_tipo_proceso_id; ?>
+<?php echo $controlador->inputs->select->nom_perido_id; ?>
 <?php include (new views())->ruta_templates.'botons/submit/alta_bd_otro.php';?>
