@@ -6,7 +6,7 @@
  * @final En proceso
  *
  */
-namespace controllers;
+namespace gamboamartin\proceso\controllers;
 
 use gamboamartin\errores\errores;
 use gamboamartin\system\links_menu;
