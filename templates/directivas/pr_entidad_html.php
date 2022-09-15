@@ -20,7 +20,7 @@ class pr_entidad_html extends html_controler {
 
     public function genera_inputs_alta(controlador_pr_entidad $controler, PDO $link): array|stdClass
     {
-        $inputs = $this->init_alta(link: $link);
+        $inputs = $this->init_alta_base(link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar inputs',data:  $inputs);
 
@@ -49,7 +49,7 @@ class pr_entidad_html extends html_controler {
         return $inputs_asignados;
     }
 
-    private function init_alta(PDO $link): array|stdClass
+    private function init_alta_base(PDO $link): array|stdClass
     {
         $keys_selects = array();
         $selects = $this->selects_alta(keys_selects: $keys_selects, link: $link);
