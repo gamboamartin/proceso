@@ -53,7 +53,7 @@
     "gamboa.martin/template": "^1.0.0",
     "gamboa.martin/template_1": "^1.0.0",
     "gamboa.martin/system": "^1.0.0",
-    "gamboa.martin/services": "dev-main",
+    "gamboa.martin/services": "^1.0.0",
     "gamboa.martin/js_base": "dev-master"
   },
     "require-dev": {
