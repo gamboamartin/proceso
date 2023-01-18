@@ -20,7 +20,6 @@ class controlador_adm_session extends \gamboamartin\controllers\controlador_adm_
 
     /**
      * Funcion de controlador donde se ejecutaran siempre que haya un acceso denegado
-     * @version 1.0.0
      * @param bool $header Si header es true cualquier error se mostrara en el html y cortara la ejecucion del sistema
      *              En false retornara un array si hay error y un string con formato html
      * @param bool $ws Si ws es true retornara el resultado en formato de json

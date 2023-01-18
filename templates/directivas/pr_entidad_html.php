@@ -98,6 +98,12 @@ class pr_entidad_html extends html_controler {
         return $inputs;
     }
 
+    /**
+     * Integra los selects de un alta
+     * @param array $keys_selects Parametros de selects
+     * @param PDO $link Conexion a la base de datos
+     * @return array|stdClass
+     */
     protected function selects_alta(array $keys_selects, PDO $link): array|stdClass
     {
         $selects = new stdClass();
