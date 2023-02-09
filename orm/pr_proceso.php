@@ -7,7 +7,7 @@ class pr_proceso extends _modelo_parent {
 
     public function __construct(PDO $link){
         $tabla = 'pr_proceso';
-        $columnas = array($tabla=>false);
+        $columnas = array($tabla=>false,'pr_tipo_proceso'=>$tabla);
         $campos_obligatorios[] = 'descripcion';
         $campos_obligatorios[] = 'descripcion_select';
 

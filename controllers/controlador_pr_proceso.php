@@ -61,6 +61,12 @@ class controlador_pr_proceso extends _ctl_base {
                 mensaje: 'Error al inicializar alta',data:  $r_alta, header: $header,ws:  $ws);
         }
 
+        $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'pr_tipo_proceso_id',
+            keys_selects: array(), id_selected: -1, label: 'Tipo Proceso');
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
+        }
+
 
         $keys_selects['descripcion'] = new stdClass();
         $keys_selects['descripcion']->cols = 6;
@@ -84,7 +90,10 @@ class controlador_pr_proceso extends _ctl_base {
         $keys->selects = array();
         $keys->fechas = array();
 
+
+
         $init_data = array();
+        $init_data['pr_tipo_proceso'] = "gamboamartin\\proceso";
         $campos_view = $this->campos_view_base(init_data: $init_data,keys:  $keys);
 
         if(errores::$error){
@@ -125,7 +134,11 @@ class controlador_pr_proceso extends _ctl_base {
                 mensaje: 'Error al generar salida de template',data:  $r_modifica,header: $header,ws: $ws);
         }
 
-
+        $keys_selects = $this->key_select(cols:12, con_registros: true,filtro:  array(), key: 'pr_tipo_proceso_id',
+            keys_selects: array(), id_selected: $this->registro['pr_tipo_proceso_id'], label: 'Tipo Proceso');
+        if(errores::$error){
+            return $this->retorno_error(mensaje: 'Error al maquetar key_selects',data:  $keys_selects, header: $header,ws:  $ws);
+        }
 
         $keys_selects['descripcion'] = new stdClass();
         $keys_selects['descripcion']->cols = 6;
