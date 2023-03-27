@@ -54,7 +54,8 @@
       "gamboa.martin/template": "^7.0.0",
       "gamboa.martin/template_1": "^9.0.0",
       "gamboa.martin/test": "^2.0.0",
-    "gamboa.martin/validacion": "^2.0.0"
+    "gamboa.martin/validacion": "^2.0.0",
+    "gamboa.martin/acl": "^8.0.0"
 
   },
     "require-dev": {
