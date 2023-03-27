@@ -103,12 +103,12 @@ class pr_entidad_html extends html_controler {
      * @param array $keys_selects Parametros de selects
      * @param PDO $link Conexion a la base de datos
      * @return array|stdClass
+     * @version 7.5.0
+     *
      */
     protected function selects_alta(array $keys_selects, PDO $link): array|stdClass
     {
-        $selects = new stdClass();
-
-        return $selects;
+        return new stdClass();
     }
 
     private function selects_modifica(PDO $link, stdClass $row_upd): array|stdClass
