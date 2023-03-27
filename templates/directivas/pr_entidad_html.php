@@ -1,10 +1,10 @@
 <?php
-namespace html;
+namespace gamboamartin\proceso\html;
 
 use gamboamartin\errores\errores;
 use gamboamartin\proceso\controllers\controlador_pr_entidad;
+use gamboamartin\proceso\models\pr_entidad;
 use gamboamartin\system\html_controler;
-use models\pr_entidad;
 use PDO;
 use stdClass;
 

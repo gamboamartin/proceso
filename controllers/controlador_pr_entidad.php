@@ -9,12 +9,12 @@
 namespace gamboamartin\proceso\controllers;
 
 use gamboamartin\errores\errores;
+use gamboamartin\proceso\html\pr_entidad_html;
+use gamboamartin\proceso\models\pr_entidad;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 
 use gamboamartin\template_1\html;
-use html\pr_entidad_html;
-use models\pr_entidad;
 use PDO;
 use stdClass;
 

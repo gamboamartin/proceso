@@ -1,11 +1,11 @@
 <?php
-namespace models;
+namespace gamboamartin\proceso\models;
 use base\orm\modelo;
 use PDO;
 
 class pr_tipo_proceso extends modelo{
     public function __construct(PDO $link){
-        $tabla = __CLASS__;
+        $tabla = 'pr_tipo_proceso';
         $columnas = array($tabla=>false);
         $campos_obligatorios = array();
 

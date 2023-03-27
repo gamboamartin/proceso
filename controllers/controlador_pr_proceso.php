@@ -69,7 +69,7 @@ class controlador_pr_proceso extends _ctl_base {
 
 
         $keys_selects['descripcion'] = new stdClass();
-        $keys_selects['descripcion']->cols = 6;
+        $keys_selects['descripcion']->cols = 12;
 
 
         $inputs = $this->inputs(keys_selects: $keys_selects);
@@ -77,7 +77,6 @@ class controlador_pr_proceso extends _ctl_base {
             return $this->retorno_error(
                 mensaje: 'Error al obtener inputs',data:  $inputs, header: $header,ws:  $ws);
         }
-
 
 
         return $r_alta;
@@ -141,7 +140,7 @@ class controlador_pr_proceso extends _ctl_base {
         }
 
         $keys_selects['descripcion'] = new stdClass();
-        $keys_selects['descripcion']->cols = 6;
+        $keys_selects['descripcion']->cols = 12;
 
         $keys_selects['codigo'] = new stdClass();
         $keys_selects['codigo']->disabled = true;

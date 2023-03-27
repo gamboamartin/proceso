@@ -10,12 +10,12 @@ namespace gamboamartin\proceso\controllers;
 
 
 use gamboamartin\errores\errores;
+use gamboamartin\proceso\html\pr_etapa_html;
+use gamboamartin\proceso\models\pr_etapa;
 use gamboamartin\system\links_menu;
 use gamboamartin\system\system;
 use gamboamartin\template\html;
 
-use html\pr_etapa_html;
-use models\pr_etapa;
 use PDO;
 use stdClass;
 

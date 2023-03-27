@@ -1,5 +1,5 @@
 <?php
-namespace models;
+namespace gamboamartin\proceso\models;
 use base\orm\modelo;
 use PDO;
 

@@ -14,11 +14,10 @@
         "psr-4": {
           "gamboamartin\\proceso\\controllers\\": "controllers",
           "config\\": "config/",
-          "models\\": "orm",
+          "gamboamartin\\proceso\\models\\": "orm",
           "tests\\": "tests/",
           "links\\": "links/",
-          "html\\": "templates/directivas/"
-
+          "gamboamartin\\proceso\\html\\": "templates/directivas"
         }
     },
     "require": {
