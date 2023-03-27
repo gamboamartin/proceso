@@ -11,7 +11,7 @@ class pr_etapa_proceso extends _modelo_parent_sin_codigo {
     public function __construct(PDO $link){
         $tabla = 'pr_etapa_proceso';
         $columnas = array($tabla=>false,'pr_etapa'=>$tabla,'pr_proceso'=>$tabla,'pr_tipo_proceso'=>'pr_proceso',
-            'adm_accion'=>$tabla);
+            'adm_accion'=>$tabla,'adm_seccion'=>'adm_accion');
         $campos_obligatorios = array();
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
