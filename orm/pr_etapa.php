@@ -6,7 +6,7 @@ use PDO;
 class pr_etapa extends modelo{
 
     public function __construct(PDO $link){
-        $tabla = __CLASS__;
+        $tabla = 'pr_etapa';
         $columnas = array($tabla=>false);
         $campos_obligatorios = array();
 

@@ -16,7 +16,7 @@ class pr_etapa_proceso_html extends html_controler {
     {
         $controler->inputs->select = new stdClass();
         $controler->inputs->select->pr_etapa_id = $inputs->selects->pr_etapa_id;
-        $controler->inputs->select->pr_tipo_proceso_id = $inputs->selects->pr_tipo_proceso_id;
+        $controler->inputs->select->pr_proceso_id = $inputs->selects->pr_proceso_id;
         return $controler->inputs;
     }
 
@@ -111,12 +111,12 @@ class pr_etapa_proceso_html extends html_controler {
         }
         $selects->pr_etapa_id = $select;
 
-        $select = (new pr_tipo_proceso_html(html:$this->html_base))->select_pr_tipo_proceso_id(
+        $select = (new pr_proceso_html(html:$this->html_base))->select_pr_proceso_id(
             cols: 6, con_registros:true, id_selected:-1,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
         }
-        $selects->pr_tipo_proceso_id = $select;
+        $selects->pr_proceso_id = $select;
 
         return $selects;
     }
@@ -132,12 +132,12 @@ class pr_etapa_proceso_html extends html_controler {
         }
         $selects->pr_etapa_id = $select;
 
-        $select = (new pr_tipo_proceso_html(html:$this->html_base))->select_pr_tipo_proceso_id(
-            cols: 6, con_registros:true, id_selected:$row_upd->pr_tipo_proceso_id,link: $link);
+        $select = (new pr_proceso_html(html:$this->html_base))->select_pr_proceso_id(
+            cols: 6, con_registros:true, id_selected:$row_upd->pr_proceso_id,link: $link);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
         }
-        $selects->pr_tipo_proceso_id = $select;
+        $selects->pr_proceso_id = $select;
 
         return $selects;
     }
