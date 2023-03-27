@@ -5,6 +5,7 @@ use gamboamartin\errores\errores;
 use gamboamartin\proceso\controllers\controlador_pr_etapa_proceso;
 use gamboamartin\proceso\models\pr_etapa_proceso;
 use gamboamartin\system\html_controler;
+use html\adm_accion_html;
 use PDO;
 use stdClass;
 
@@ -17,6 +18,7 @@ class pr_etapa_proceso_html extends html_controler {
         $controler->inputs->select = new stdClass();
         $controler->inputs->select->pr_etapa_id = $inputs->selects->pr_etapa_id;
         $controler->inputs->select->pr_proceso_id = $inputs->selects->pr_proceso_id;
+        $controler->inputs->select->adm_accion_id = $inputs->selects->adm_accion_id;
         return $controler->inputs;
     }
 
@@ -118,6 +120,13 @@ class pr_etapa_proceso_html extends html_controler {
         }
         $selects->pr_proceso_id = $select;
 
+        $select = (new adm_accion_html(html:$this->html_base))->select_adm_accion_id(
+            cols: 12, con_registros:true, id_selected:-1,link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+        }
+        $selects->adm_accion_id = $select;
+
         return $selects;
     }
 
@@ -138,6 +147,13 @@ class pr_etapa_proceso_html extends html_controler {
             return $this->error->error(mensaje: 'Error al generar select',data:  $select);
         }
         $selects->pr_proceso_id = $select;
+
+        $select = (new adm_accion_html(html:$this->html_base))->select_adm_accion_id(
+            cols: 12, con_registros:true, id_selected:$row_upd->adm_accion_id,link: $link);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al generar select',data:  $select);
+        }
+        $selects->adm_accion_id = $select;
 
         return $selects;
     }

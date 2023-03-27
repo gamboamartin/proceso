@@ -2,6 +2,7 @@
 namespace gamboamartin\proceso\models;
 use base\orm\_modelo_parent_sin_codigo;
 
+use gamboamartin\administrador\models\adm_accion;
 use gamboamartin\errores\errores;
 use PDO;
 use stdClass;
@@ -9,7 +10,8 @@ use stdClass;
 class pr_etapa_proceso extends _modelo_parent_sin_codigo {
     public function __construct(PDO $link){
         $tabla = 'pr_etapa_proceso';
-        $columnas = array($tabla=>false,'pr_etapa'=>$tabla,'pr_proceso'=>$tabla,'pr_tipo_proceso'=>'pr_proceso');
+        $columnas = array($tabla=>false,'pr_etapa'=>$tabla,'pr_proceso'=>$tabla,'pr_tipo_proceso'=>'pr_proceso',
+            'adm_accion'=>$tabla);
         $campos_obligatorios = array();
 
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
@@ -20,7 +22,7 @@ class pr_etapa_proceso extends _modelo_parent_sin_codigo {
 
     public function alta_bd(array $keys_integra_ds = array('descripcion')): array|stdClass
     {
-        $keys = array('pr_proceso_id','pr_etapa_id');
+        $keys = array('pr_proceso_id','pr_etapa_id','adm_accion_id');
         $valida = $this->validacion->valida_ids(keys: $keys,registro:  $this->registro);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al validar registro',data: $valida);
@@ -34,13 +36,17 @@ class pr_etapa_proceso extends _modelo_parent_sin_codigo {
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener etapa',data: $pr_etapa);
         }
+        $adm_accion = (new adm_accion(link: $this->link))->registro(registro_id: $this->registro['adm_accion_id'], retorno_obj: true);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener adm_accion',data: $adm_accion);
+        }
 
         if(!isset($this->registro['codigo'])){
-            $codigo = $pr_proceso->pr_proceso_codigo.''.$pr_etapa->pr_etapa_codigo;
+            $codigo = $pr_proceso->pr_proceso_codigo.$pr_etapa->pr_etapa_codigo.$adm_accion->adm_accion_codigo;
             $this->registro['codigo'] = $codigo;
         }
         if(!isset($this->registro['descripcion'])){
-            $descripcion = $pr_proceso->pr_proceso_descripcion.''.$pr_etapa->pr_etapa_descripcion;
+            $descripcion = $pr_proceso->pr_proceso_descripcion.' '.$pr_etapa->pr_etapa_descripcion.' '.$adm_accion->adm_accion_descripcion;
             $this->registro['descripcion'] = $descripcion;
         }
 
