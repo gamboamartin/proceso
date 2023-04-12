@@ -24,7 +24,7 @@ class pr_proceso extends _modelo_parent {
         $this->NAMESPACE = __NAMESPACE__;
     }
 
-    private function data_etapa(string $adm_accion, string $adm_seccion){
+    private function data_etapa(string $adm_accion, string $adm_seccion, bool $valida_existencia_etapa){
         $filtro = $this->filtro_etapa_proceso(adm_accion: $adm_accion,adm_seccion: $adm_seccion);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener filtro de etapa', data: $filtro);
@@ -34,6 +34,11 @@ class pr_proceso extends _modelo_parent {
         $r_pr_etapa_proceso = (new pr_etapa_proceso(link: $this->link))->filtro_and(filtro: $filtro);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener conf de etapa', data: $r_pr_etapa_proceso);
+        }
+        if($valida_existencia_etapa) {
+            if ($r_pr_etapa_proceso->n_registros > 0) {
+                return $this->error->error(mensaje: 'Error No existe etapa definida', data: $r_pr_etapa_proceso);
+            }
         }
 
         if($r_pr_etapa_proceso->n_registros > 1){
@@ -86,8 +91,10 @@ class pr_proceso extends _modelo_parent {
         return $etapa;
     }
 
-    final public function inserta_etapa(string $adm_accion, string $fecha, modelo $modelo, modelo $modelo_etapa, int $registro_id){
-        $r_pr_etapa_proceso = $this->data_etapa(adm_accion: $adm_accion,adm_seccion:  $modelo->tabla);
+    final public function inserta_etapa(string $adm_accion, string $fecha, modelo $modelo, modelo $modelo_etapa,
+                                        int $registro_id, bool $valida_existencia_etapa){
+        $r_pr_etapa_proceso = $this->data_etapa(adm_accion: $adm_accion,adm_seccion:  $modelo->tabla,
+            valida_existencia_etapa: $valida_existencia_etapa);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener conf de etapa', data: $r_pr_etapa_proceso);
         }
