@@ -72,9 +72,18 @@ class pr_proceso extends _modelo_parent {
      * @param string $adm_accion Accion
      * @param string $adm_seccion Seccion
      * @return array
+     * @version 7.14.0
      */
     private function filtro_etapa_proceso(string $adm_accion, string $adm_seccion): array
     {
+        $adm_accion = trim($adm_accion);
+        if($adm_accion === ''){
+            return $this->error->error(mensaje: 'Error adm_accion esta vacia', data: $adm_accion);
+        }
+        $adm_seccion = trim($adm_seccion);
+        if($adm_seccion === ''){
+            return $this->error->error(mensaje: 'Error adm_seccion esta vacia', data: $adm_seccion);
+        }
         $filtro['adm_accion.descripcion'] = $adm_accion;
         $filtro['adm_seccion.descripcion'] = $adm_seccion;
         return $filtro;
