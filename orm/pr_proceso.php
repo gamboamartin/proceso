@@ -36,7 +36,7 @@ class pr_proceso extends _modelo_parent {
             return $this->error->error(mensaje: 'Error al obtener conf de etapa', data: $r_pr_etapa_proceso);
         }
         if($valida_existencia_etapa) {
-            if ($r_pr_etapa_proceso->n_registros > 0) {
+            if ((int)$r_pr_etapa_proceso->n_registros === 0) {
                 return $this->error->error(mensaje: 'Error No existe etapa definida', data: $r_pr_etapa_proceso);
             }
         }
