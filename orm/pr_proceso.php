@@ -67,6 +67,12 @@ class pr_proceso extends _modelo_parent {
             registro_id:  $registro_id);
     }
 
+    /**
+     * Genera el filtro para obtencion de etapa
+     * @param string $adm_accion Accion
+     * @param string $adm_seccion Seccion
+     * @return array
+     */
     private function filtro_etapa_proceso(string $adm_accion, string $adm_seccion): array
     {
         $filtro['adm_accion.descripcion'] = $adm_accion;
