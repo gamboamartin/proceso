@@ -107,7 +107,7 @@ class pr_proceso extends _modelo_parent {
     }
 
     final public function inserta_etapa(string $adm_accion, string $fecha, modelo $modelo, modelo $modelo_etapa,
-                                        int $registro_id, bool $valida_existencia_etapa){
+                                        int $registro_id, bool $valida_existencia_etapa = true){
         $r_pr_etapa_proceso = $this->data_etapa(adm_accion: $adm_accion,adm_seccion:  $modelo->tabla,
             valida_existencia_etapa: $valida_existencia_etapa);
         if(errores::$error){
