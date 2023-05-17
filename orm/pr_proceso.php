@@ -24,7 +24,15 @@ class pr_proceso extends _modelo_parent {
         $this->NAMESPACE = __NAMESPACE__;
     }
 
-    private function data_etapa(string $adm_accion, string $adm_seccion, bool $valida_existencia_etapa){
+    /**
+     * Obtiene los datos de etapas de una entidad
+     * @param string $adm_accion Accion
+     * @param string $adm_seccion Seccion
+     * @param bool $valida_existencia_etapa Si valida, da error si no existe
+     * @return array|stdClass
+     */
+    private function data_etapa(string $adm_accion, string $adm_seccion, bool $valida_existencia_etapa): array|stdClass
+    {
         $filtro = $this->filtro_etapa_proceso(adm_accion: $adm_accion,adm_seccion: $adm_seccion);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener filtro de etapa', data: $filtro);
