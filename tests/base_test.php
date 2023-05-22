@@ -26,11 +26,13 @@ class base_test{
     }
 
 
-    public function alta_pr_etapa(PDO $link, int $id = 1): array|stdClass
+    public function alta_pr_etapa(PDO $link, int $codigo = 1, string $descripcion = '1', int $id = 1): array|stdClass
     {
 
         $registro = array();
         $registro['id'] = $id;
+        $registro['codigo'] = $codigo;
+        $registro['descripcion'] = $descripcion;
 
         $alta = (new pr_etapa($link))->alta_registro(registro: $registro);
         if(errores::$error){
@@ -38,7 +40,6 @@ class base_test{
         }
         return $alta;
     }
-
     public function alta_pr_etapa_proceso(PDO $link, int $adm_accion_id = 1, int $pr_etapa_id = 1, int $id = 1,
                                           int $pr_proceso_id = 1): array|stdClass
     {
