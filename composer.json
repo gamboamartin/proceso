@@ -15,7 +15,7 @@
           "gamboamartin\\proceso\\controllers\\": "controllers",
           "config\\": "config/",
           "gamboamartin\\proceso\\models\\": "orm",
-          "tests\\": "tests/",
+          "gamboamartin\\proceso\\tests\\": "tests/",
           "links\\": "links/",
           "gamboamartin\\proceso\\html\\": "templates/directivas"
         }
