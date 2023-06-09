@@ -123,12 +123,14 @@ class base_test{
         return $alta;
     }
 
-    public function alta_pr_tipo_proceso(PDO $link, string $codigo = '01', int $id = 1): array|stdClass
+    public function alta_pr_tipo_proceso(PDO $link, string $codigo = '01', string $descripcion = '01',
+                                         int $id = 1): array|stdClass
     {
 
         $registro = array();
         $registro['id'] = $id;
         $registro['codigo'] = $codigo;
+        $registro['descripcion'] = $descripcion;
 
         $alta = (new pr_tipo_proceso($link))->alta_registro($registro);
         if(errores::$error){
