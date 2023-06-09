@@ -123,11 +123,12 @@ class base_test{
         return $alta;
     }
 
-    public function alta_pr_tipo_proceso(PDO $link, int $id = 1): array|stdClass
+    public function alta_pr_tipo_proceso(PDO $link, string $codigo = '01', int $id = 1): array|stdClass
     {
 
         $registro = array();
         $registro['id'] = $id;
+        $registro['codigo'] = $codigo;
 
         $alta = (new pr_tipo_proceso($link))->alta_registro($registro);
         if(errores::$error){
@@ -155,6 +156,39 @@ class base_test{
     {
 
         $del = $this->del(link: $link,name_model:  'gamboamartin\\proceso\\models\\pr_etapa_proceso');
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+
+        }
+        return $del;
+    }
+
+
+    public function del_pr_proceso(PDO $link): array|\stdClass
+    {
+
+        $del = $this->del_pr_etapa_proceso(link: $link);
+        if (errores::$error) {
+            return (new errores())->error('Error al eliminar pr_tipo_proceso_id', $del);
+        }
+
+        $del = $this->del(link: $link,name_model:  'gamboamartin\\proceso\\models\\pr_proceso');
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+
+        }
+        return $del;
+    }
+
+    public function del_pr_tipo_proceso(PDO $link): array|\stdClass
+    {
+
+        $del = $this->del_pr_proceso(link: $link);
+        if (errores::$error) {
+            return (new errores())->error('Error al eliminar pr_tipo_proceso_id', $del);
+        }
+
+        $del = $this->del(link: $link,name_model:  'gamboamartin\\proceso\\models\\pr_tipo_proceso');
         if(errores::$error){
             return (new errores())->error('Error al eliminar', $del);
 
