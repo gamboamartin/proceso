@@ -97,7 +97,7 @@ class base_test{
         return $alta;
     }
 
-    public function alta_pr_proceso(PDO $link, int $id = 1, int $pr_tipo_proceso_id = 1): array|stdClass
+    public function alta_pr_proceso(PDO $link, string $descripcion = '01', int $id = 1, int $pr_tipo_proceso_id = 1): array|stdClass
     {
 
         $existe = (new pr_tipo_proceso($link))->existe_by_id(registro_id: $pr_tipo_proceso_id);
@@ -115,6 +115,7 @@ class base_test{
         $registro = array();
         $registro['id'] = $id;
         $registro['pr_tipo_proceso_id'] = $pr_tipo_proceso_id;
+        $registro['descripcion'] = $descripcion;
 
         $alta = (new pr_proceso($link))->alta_registro($registro);
         if(errores::$error){
