@@ -15,12 +15,13 @@ use stdClass;
 
 class base_test{
 
-    public function alta_adm_accion(PDO $link, string $adm_seccion_descripcion='fc_factura',
+    public function alta_adm_accion(PDO $link, string $adm_seccion_descripcion='fc_factura', int $adm_seccion_id = 1,
                                     string $descripcion ='alta_bd', int $id = 1): array|stdClass
     {
 
         $alta = (new \gamboamartin\administrador\tests\base_test())->alta_adm_accion(link: $link,
-            adm_seccion_descripcion: $adm_seccion_descripcion, descripcion: $descripcion, id: $id);
+            adm_seccion_descripcion: $adm_seccion_descripcion, adm_seccion_id: $adm_seccion_id,
+            descripcion: $descripcion, id: $id);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error al insertar', data: $alta);
         }
@@ -42,7 +43,9 @@ class base_test{
         }
         return $alta;
     }
-    public function alta_pr_etapa_proceso(PDO $link, int $adm_accion_id = 1, int $pr_etapa_id = 1, int $id = 1,
+    public function alta_pr_etapa_proceso(PDO $link, int $adm_accion_id = 1, int $adm_seccion_id = 1,
+                                          string $pr_etapa_codigo ='1', string $pr_etapa_descripcion = '1',
+                                          int $pr_etapa_id = 1, int $id = 1, string $pr_proceso__descripcion ='01',
                                           int $pr_proceso_id = 1, string $adm_accion_descripcion = 'alta_bd',
                                           string $adm_seccion_descripcion='fc_factura'): array|stdClass
     {
@@ -52,7 +55,8 @@ class base_test{
             return (new errores())->error('Error al validar si existe', $existe);
         }
         if(!$existe) {
-            $alta = $this->alta_pr_etapa(link: $link,id: $pr_etapa_id);
+            $alta = $this->alta_pr_etapa(link: $link, codigo: $pr_etapa_codigo, descripcion: $pr_etapa_descripcion,
+                id: $pr_etapa_id);
             if (errores::$error) {
                 return (new errores())->error('Error al insertar adm_seccion', $alta);
             }
@@ -63,7 +67,7 @@ class base_test{
             return (new errores())->error('Error al validar si existe', $existe);
         }
         if(!$existe) {
-            $alta = $this->alta_pr_proceso(link: $link,id: $pr_proceso_id);
+            $alta = $this->alta_pr_proceso(link: $link, descripcion: $pr_proceso__descripcion, id: $pr_proceso_id);
             if (errores::$error) {
                 return (new errores())->error('Error al insertar pr_proceso_id', $alta);
             }
@@ -78,7 +82,7 @@ class base_test{
         }
         if(!$existe) {
             $alta = $this->alta_adm_accion(link: $link, adm_seccion_descripcion: $adm_seccion_descripcion,
-                descripcion: $adm_accion_descripcion, id: $adm_accion_id);
+                adm_seccion_id: $adm_seccion_id, descripcion: $adm_accion_descripcion, id: $adm_accion_id);
             if (errores::$error) {
                 return (new errores())->error('Error al insertar adm_seccion', $alta);
             }
