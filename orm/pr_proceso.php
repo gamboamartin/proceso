@@ -17,7 +17,6 @@ class pr_proceso extends _modelo_parent {
         $tipo_campos['codigos'] = 'cod_1_letras_mayusc';
 
 
-
         parent::__construct(link: $link,tabla:  $tabla, campos_obligatorios: $campos_obligatorios,
             columnas: $columnas, tipo_campos: $tipo_campos);
 
@@ -30,9 +29,19 @@ class pr_proceso extends _modelo_parent {
      * @param string $adm_seccion Seccion
      * @param bool $valida_existencia_etapa Si valida, da error si no existe
      * @return array|stdClass
+     * @version 9.1.0
      */
     private function data_etapa(string $adm_accion, string $adm_seccion, bool $valida_existencia_etapa): array|stdClass
     {
+        $adm_accion = trim($adm_accion);
+        if($adm_accion === ''){
+            return $this->error->error(mensaje: 'Error adm_accion esta vacia', data: $adm_accion);
+        }
+        $adm_seccion = trim($adm_seccion);
+        if($adm_seccion === ''){
+            return $this->error->error(mensaje: 'Error adm_seccion esta vacia', data: $adm_seccion);
+        }
+
         $filtro = $this->filtro_etapa_proceso(adm_accion: $adm_accion,adm_seccion: $adm_seccion);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener filtro de etapa', data: $filtro);
@@ -43,6 +52,7 @@ class pr_proceso extends _modelo_parent {
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener conf de etapa', data: $r_pr_etapa_proceso);
         }
+
         if($valida_existencia_etapa) {
             if ((int)$r_pr_etapa_proceso->n_registros === 0) {
                 return $this->error->error(mensaje: 'Error No existe etapa definida', data: $r_pr_etapa_proceso);
