@@ -63,7 +63,7 @@ class pr_procesoTest extends test {
         $adm_accion = 'test';
         $adm_seccion = 'adm_accion';
         $valida_existencia_etapa = true;
-        $resultado = $modelo->data_etapa($adm_accion, $adm_seccion, $valida_existencia_etapa);
+        $resultado = $modelo->data_etapa($adm_accion, $adm_seccion,'', $valida_existencia_etapa);
         $this->assertIsObject($resultado);
         $this->assertNotTrue(errores::$error);
 

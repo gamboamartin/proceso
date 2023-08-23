@@ -28,10 +28,12 @@ class pr_proceso extends _modelo_parent {
      * @param string $adm_accion Accion
      * @param string $adm_seccion Seccion
      * @param bool $valida_existencia_etapa Si valida, da error si no existe
+     * @param string $pr_etapa_descripcion Descripcion de la etapa a buscar
      * @return array|stdClass
      * @version 9.1.0
      */
-    private function data_etapa(string $adm_accion, string $adm_seccion, bool $valida_existencia_etapa): array|stdClass
+    private function data_etapa(string $adm_accion, string $adm_seccion, bool $valida_existencia_etapa,
+                                string $pr_etapa_descripcion = ''): array|stdClass
     {
         $adm_accion = trim($adm_accion);
         if($adm_accion === ''){
@@ -42,7 +44,9 @@ class pr_proceso extends _modelo_parent {
             return $this->error->error(mensaje: 'Error adm_seccion esta vacia', data: $adm_seccion);
         }
 
-        $filtro = $this->filtro_etapa_proceso(adm_accion: $adm_accion,adm_seccion: $adm_seccion);
+
+        $filtro = $this->filtro_etapa_proceso(adm_accion: $adm_accion,adm_seccion: $adm_seccion,
+            pr_etapa_descripcion: $pr_etapa_descripcion);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener filtro de etapa', data: $filtro);
         }
@@ -65,6 +69,14 @@ class pr_proceso extends _modelo_parent {
         return $r_pr_etapa_proceso;
     }
 
+    /**
+     * Integra los elementos necesarios para insertar una etapa en el modelo de etapa de la entidad
+     * @param string $fecha Fecha de etapa
+     * @param string $key_id Key del modelo base
+     * @param int $pr_etapa_proceso_id Etapa id
+     * @param int $registro_id Registro del modelo base
+     * @return array
+     */
     private function data_insert_etapa(string $fecha, string $key_id, int $pr_etapa_proceso_id, int $registro_id): array
     {
         if($fecha === ''){
@@ -89,10 +101,12 @@ class pr_proceso extends _modelo_parent {
      * Genera el filtro para obtencion de etapa
      * @param string $adm_accion Accion
      * @param string $adm_seccion Seccion
+     * @param string $pr_etapa_descripcion Descripcion de la etapa a buscar
      * @return array
      * @version 7.14.0
      */
-    private function filtro_etapa_proceso(string $adm_accion, string $adm_seccion): array
+    private function filtro_etapa_proceso(string $adm_accion, string $adm_seccion,
+                                          string $pr_etapa_descripcion = ''): array
     {
         $adm_accion = trim($adm_accion);
         if($adm_accion === ''){
@@ -102,13 +116,18 @@ class pr_proceso extends _modelo_parent {
         if($adm_seccion === ''){
             return $this->error->error(mensaje: 'Error adm_seccion esta vacia', data: $adm_seccion);
         }
+        $pr_etapa_descripcion = trim($pr_etapa_descripcion);
+        if($pr_etapa_descripcion === ''){
+            $filtro['pr_etapa.descripcion'] = $pr_etapa_descripcion;
+        }
         $filtro['adm_accion.descripcion'] = $adm_accion;
         $filtro['adm_seccion.descripcion'] = $adm_seccion;
         return $filtro;
     }
 
 
-    private function inserta_data_etapa(string $fecha, modelo $modelo, modelo $modelo_etapa, stdClass $r_pr_etapa_proceso, int $registro_id){
+    private function inserta_data_etapa(string $fecha, modelo $modelo, modelo $modelo_etapa,
+                                        stdClass $r_pr_etapa_proceso, int $registro_id){
         $etapa = new stdClass();
         if($r_pr_etapa_proceso->n_registros === 1){
 
@@ -125,9 +144,10 @@ class pr_proceso extends _modelo_parent {
     }
 
     final public function inserta_etapa(string $adm_accion, string $fecha, modelo $modelo, modelo $modelo_etapa,
-                                        int $registro_id, bool $valida_existencia_etapa = true){
+                                        int $registro_id, string $pr_etapa_descripcion = '',
+                                        bool $valida_existencia_etapa = true){
         $r_pr_etapa_proceso = $this->data_etapa(adm_accion: $adm_accion,adm_seccion:  $modelo->tabla,
-            valida_existencia_etapa: $valida_existencia_etapa);
+            valida_existencia_etapa: $valida_existencia_etapa, pr_etapa_descripcion: $pr_etapa_descripcion);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al obtener conf de etapa', data: $r_pr_etapa_proceso);
         }
