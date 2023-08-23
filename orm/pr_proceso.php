@@ -76,12 +76,26 @@ class pr_proceso extends _modelo_parent {
      * @param int $pr_etapa_proceso_id Etapa id
      * @param int $registro_id Registro del modelo base
      * @return array
+     * @version 9.3.0
      */
-    private function data_insert_etapa(string $fecha, string $key_id, int $pr_etapa_proceso_id, int $registro_id): array
+    private function data_insert_etapa(string $fecha, string $key_id, int $pr_etapa_proceso_id,
+                                       int $registro_id): array
     {
+        $fecha = trim($fecha);
         if($fecha === ''){
             $fecha = date('Y-m-d');
         }
+        $key_id = trim($key_id);
+        if($key_id === ''){
+            return $this->error->error(mensaje: 'Error key_id esta vacio', data: $key_id);
+        }
+        if($pr_etapa_proceso_id<=0){
+            return $this->error->error(mensaje: 'Error pr_etapa_proceso_id es menor a 0', data: $key_id);
+        }
+        if($registro_id<=0){
+            return $this->error->error(mensaje: 'Error registro_id es menor a 0', data: $registro_id);
+        }
+
         $row['pr_etapa_proceso_id'] = $pr_etapa_proceso_id;
         $row[$key_id] = $registro_id;
         $row['fecha'] = $fecha;
@@ -117,7 +131,7 @@ class pr_proceso extends _modelo_parent {
             return $this->error->error(mensaje: 'Error adm_seccion esta vacia', data: $adm_seccion);
         }
         $pr_etapa_descripcion = trim($pr_etapa_descripcion);
-        if($pr_etapa_descripcion === ''){
+        if($pr_etapa_descripcion !== ''){
             $filtro['pr_etapa.descripcion'] = $pr_etapa_descripcion;
         }
         $filtro['adm_accion.descripcion'] = $adm_accion;
