@@ -102,6 +102,13 @@ class pr_proceso extends _modelo_parent {
         return $row;
     }
 
+    /**
+     * @param string $fecha
+     * @param string $key_id
+     * @param stdClass $r_pr_etapa_proceso
+     * @param int $registro_id
+     * @return array
+     */
     private function data_row_insert(string $fecha, string $key_id, stdClass $r_pr_etapa_proceso, int $registro_id): array
     {
         $pr_etapa_proceso = $r_pr_etapa_proceso->registros[0];
