@@ -54,6 +54,12 @@ class pr_procesoTest extends test {
             print_r($error);exit;
         }
 
+        $del = (new base_test())->del_pr_sub_proceso(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al insertar',data:  $del);
+            print_r($error);exit;
+        }
+
         $alta = (new base_test())->alta_pr_etapa_proceso(link: $this->link,adm_accion_descripcion: 'test');
         if(errores::$error){
             $error = (new errores())->error(mensaje: 'Error al insertar',data:  $alta);

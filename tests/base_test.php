@@ -170,6 +170,17 @@ class base_test{
         return $del;
     }
 
+    public function del_pr_sub_proceso(PDO $link): array|\stdClass
+    {
+
+        $del = $this->del(link: $link,name_model:  'gamboamartin\\proceso\\models\\pr_sub_proceso');
+        if(errores::$error){
+            return (new errores())->error('Error al eliminar', $del);
+
+        }
+        return $del;
+    }
+
 
     public function del_pr_proceso(PDO $link): array|\stdClass
     {
