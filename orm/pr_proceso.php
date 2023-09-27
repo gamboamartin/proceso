@@ -111,7 +111,7 @@ class pr_proceso extends _modelo_parent {
      * @return array
      * @version 13.1.0
      */
-    PUBLIC function data_row_insert(string $fecha, string $key_id, stdClass $r_pr_etapa_proceso,
+    private function data_row_insert(string $fecha, string $key_id, stdClass $r_pr_etapa_proceso,
                                      int $registro_id): array
     {
         if(!isset($r_pr_etapa_proceso->registros)){
@@ -187,8 +187,22 @@ class pr_proceso extends _modelo_parent {
     }
 
 
+    /**
+     * Inserta una etapa en una entidad
+     * @param string $fecha Fecha de etapa
+     * @param modelo $modelo Modelo entidad base
+     * @param modelo $modelo_etapa Modelo de relacion entre base y etapa
+     * @param stdClass $r_pr_etapa_proceso Resultado de consulta de pr proceso etapa
+     * @param int $registro_id Identificador de entidad base
+     * @return array|stdClass
+     * @version 13.2.0
+     */
     private function inserta_data_etapa(string $fecha, modelo $modelo, modelo $modelo_etapa,
-                                        stdClass $r_pr_etapa_proceso, int $registro_id){
+                                        stdClass $r_pr_etapa_proceso, int $registro_id): array|stdClass
+    {
+        if(!isset($r_pr_etapa_proceso->n_registros)){
+            return new stdClass();
+        }
         $etapa = new stdClass();
         if($r_pr_etapa_proceso->n_registros === 1){
 
@@ -204,9 +218,20 @@ class pr_proceso extends _modelo_parent {
         return $etapa;
     }
 
+    /**
+     * @param string $adm_accion
+     * @param string $fecha
+     * @param modelo $modelo
+     * @param modelo $modelo_etapa
+     * @param int $registro_id
+     * @param string $pr_etapa_descripcion
+     * @param bool $valida_existencia_etapa
+     * @return array|stdClass
+     */
     final public function inserta_etapa(string $adm_accion, string $fecha, modelo $modelo, modelo $modelo_etapa,
                                         int $registro_id, string $pr_etapa_descripcion = '',
-                                        bool $valida_existencia_etapa = true){
+                                        bool $valida_existencia_etapa = true): array|stdClass
+    {
         $r_pr_etapa_proceso = $this->data_etapa(adm_accion: $adm_accion,adm_seccion:  $modelo->tabla,
             valida_existencia_etapa: $valida_existencia_etapa, pr_etapa_descripcion: $pr_etapa_descripcion);
         if(errores::$error){
