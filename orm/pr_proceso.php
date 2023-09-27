@@ -219,19 +219,26 @@ class pr_proceso extends _modelo_parent {
     }
 
     /**
-     * @param string $adm_accion
-     * @param string $fecha
-     * @param modelo $modelo
-     * @param modelo $modelo_etapa
-     * @param int $registro_id
-     * @param string $pr_etapa_descripcion
-     * @param bool $valida_existencia_etapa
+     * Inserta una etapa en la entidad de ejecucion
+     * @param string $adm_accion Accion de etapa
+     * @param string $fecha Fecha de etapa
+     * @param modelo $modelo Modelo base de entidad ej, fc_factura
+     * @param modelo $modelo_etapa Modelo de integracion de etapa ej fc_factura_etapa
+     * @param int $registro_id Registro id base
+     * @param string $pr_etapa_descripcion Etapa a verificar
+     * @param bool $valida_existencia_etapa Si es true, retorno error si no existe la etapa definida de busqueda
      * @return array|stdClass
+     * @version 13.3.0
      */
     final public function inserta_etapa(string $adm_accion, string $fecha, modelo $modelo, modelo $modelo_etapa,
                                         int $registro_id, string $pr_etapa_descripcion = '',
                                         bool $valida_existencia_etapa = true): array|stdClass
     {
+        $adm_accion = trim($adm_accion);
+        if($adm_accion === ''){
+            return $this->error->error(mensaje: 'Error adm_accion esta vacia', data: $adm_accion);
+        }
+
         $r_pr_etapa_proceso = $this->data_etapa(adm_accion: $adm_accion,adm_seccion:  $modelo->tabla,
             valida_existencia_etapa: $valida_existencia_etapa, pr_etapa_descripcion: $pr_etapa_descripcion);
         if(errores::$error){

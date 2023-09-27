@@ -179,6 +179,29 @@ class pr_procesoTest extends test {
         errores::$error = false;
     }
 
+    public function test_inserta_etapa(): void
+    {
+        errores::$error = false;
+
+        $_GET['seccion'] = 'cat_sat_tipo_persona';
+        $_GET['accion'] = 'lista';
+        $_SESSION['grupo_id'] = 1;
+        $_SESSION['usuario_id'] = 2;
+        $_GET['session_id'] = '1';
+
+        $modelo = new pr_proceso(link: $this->link);
+        //$modelo = new liberator($modelo);
+
+        $adm_accion = 'a';
+        $fecha = '';
+        $registro_id = -1;
+        $modelo_etapa = new pr_proceso(link: $this->link);
+        $resultado = $modelo->inserta_etapa($adm_accion, $fecha, $modelo, $modelo_etapa, $registro_id,'',false);
+        $this->assertIsObject($resultado);
+        $this->assertNotTrue(errores::$error);
+        errores::$error = false;
+    }
+
 
 }
 
