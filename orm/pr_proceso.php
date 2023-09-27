@@ -6,6 +6,9 @@ use gamboamartin\errores\errores;
 use PDO;
 use stdClass;
 
+/**
+ * TEST FINALIZADOS
+ */
 class pr_proceso extends _modelo_parent {
 
     public function __construct(PDO $link){
