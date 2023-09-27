@@ -103,19 +103,59 @@ class pr_proceso extends _modelo_parent {
     }
 
     /**
-     * @param string $fecha
-     * @param string $key_id
-     * @param stdClass $r_pr_etapa_proceso
-     * @param int $registro_id
+     * Integra los valores necesarios para insersion de una etapa
+     * @param string $fecha Fecha de etapa
+     * @param string $key_id Key de entidad de integracion
+     * @param stdClass $r_pr_etapa_proceso Resultado de busqueda de proceso
+     * @param int $registro_id Id de entidad relacionada
      * @return array
+     * @version 13.1.0
      */
-    private function data_row_insert(string $fecha, string $key_id, stdClass $r_pr_etapa_proceso, int $registro_id): array
+    PUBLIC function data_row_insert(string $fecha, string $key_id, stdClass $r_pr_etapa_proceso,
+                                     int $registro_id): array
     {
+        if(!isset($r_pr_etapa_proceso->registros)){
+            return $this->error->error(mensaje: 'Error r_pr_etapa_proceso->registro no existe',
+                data: $r_pr_etapa_proceso);
+        }
+        if(!is_array($r_pr_etapa_proceso->registros)){
+            return $this->error->error(mensaje: 'Error r_pr_etapa_proceso->registro debe ser un array',
+                data: $r_pr_etapa_proceso);
+        }
+        if(!isset($r_pr_etapa_proceso->registros[0])){
+            return $this->error->error(mensaje: 'Error r_pr_etapa_proceso->registro[0] no existe',
+                data: $r_pr_etapa_proceso);
+        }
+        if(!is_array($r_pr_etapa_proceso->registros[0])){
+            return $this->error->error(mensaje: 'Error r_pr_etapa_proceso->registro[0] debe ser un array',
+                data: $r_pr_etapa_proceso);
+        }
         $pr_etapa_proceso = $r_pr_etapa_proceso->registros[0];
 
-        return $this->data_insert_etapa(fecha:$fecha,
-            key_id: $key_id, pr_etapa_proceso_id: $pr_etapa_proceso['pr_etapa_proceso_id'],
-            registro_id:  $registro_id);
+        $keys = array('pr_etapa_proceso_id');
+        $valida = $this->validacion->valida_ids(keys: $keys,registro:  $pr_etapa_proceso);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al validar pr_etapa_proceso', data: $valida);
+        }
+
+        $fecha = trim($fecha);
+        if($fecha === ''){
+            $fecha = date('Y-m-d');
+        }
+        $key_id = trim($key_id);
+        if($key_id === ''){
+            return $this->error->error(mensaje: 'Error key_id esta vacio', data: $key_id);
+        }
+        if($registro_id<=0){
+            return $this->error->error(mensaje: 'Error registro_id es menor a 0', data: $registro_id);
+        }
+
+        $data = $this->data_insert_etapa(fecha: $fecha,key_id:  $key_id,
+            pr_etapa_proceso_id: $pr_etapa_proceso['pr_etapa_proceso_id'],registro_id:  $registro_id);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al integrar datos de etapa', data: $data);
+        }
+        return $data;
     }
 
     /**
