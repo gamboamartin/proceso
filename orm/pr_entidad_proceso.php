@@ -56,7 +56,8 @@ class pr_entidad_proceso extends _modelo_parent_sin_codigo {
     }
 
     /**
-     * @param array $registro
+     * Obtiene los datos necesarios para un entidad proceso
+     * @param array $registro Registro en ejecucion
      * @return array|stdClass
      */
     private function data_entidad_proceso(array $registro): array|stdClass
