@@ -45,7 +45,6 @@ class controlador_adm_session extends \gamboamartin\controllers\controlador_adm_
      *              En false retornara un array si hay error y un string con formato html
      * @param bool $ws Si ws es true retornara el resultado en formato de json
      * @return string|array string = html array = error
-     * @throws JsonException si hay error en forma ws
      */
     public function inicio(bool $aplica_template = false, bool $header = true, bool $ws = false): string|array
     {
