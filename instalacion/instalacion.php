@@ -7,6 +7,33 @@ use stdClass;
 
 class instalacion
 {
+    private function _add_pr_etapa(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $init = (new _instalacion(link: $link));
+
+        $create = $init->create_table_new(table: 'pr_etapa');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al agregar tabla', data:  $create);
+        }
+        $out->create = $create;
+
+        return $out;
+    }
+
+    private function pr_etapa(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $init = (new _instalacion(link: $link));
+
+        $create = $init->create_table_new(table: 'pr_etapa');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al agregar tabla', data:  $create);
+        }
+        $out->create = $create;
+
+        return $out;
+    }
     private function _add_pr_etapa_proceso(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -77,7 +104,6 @@ class instalacion
 
         return $out;
     }
-
     private function _add_pr_tipo_proceso(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -113,7 +139,6 @@ class instalacion
         return $out;
 
     }
-
     private function pr_proceso(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -128,7 +153,6 @@ class instalacion
         return $out;
 
     }
-
     private function pr_tipo_proceso(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -143,7 +167,6 @@ class instalacion
         return $out;
 
     }
-
     final public function instala(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -152,7 +175,10 @@ class instalacion
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error integrar pr_tipo_proceso', data:  $pr_tipo_proceso);
         }
-
+        $pr_etapa = $this->pr_etapa(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error integrar pr_etapa', data:  $pr_etapa);
+        }
 
         $pr_proceso = $this->pr_proceso(link: $link);
         if(errores::$error){
