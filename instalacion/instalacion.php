@@ -43,6 +43,41 @@ class instalacion
 
         return $out;
     }
+
+    private function _add_pr_proceso(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $init = (new _instalacion(link: $link));
+
+        $create = $init->create_table_new(table: 'pr_proceso');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al agregar tabla', data:  $create);
+        }
+        $out->create = $create;
+
+        $columnas = new stdClass();
+        $add_colums = $init->add_columns(campos: $columnas,table:  'pr_proceso');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al agregar columnas', data:  $add_colums);
+        }
+        $out->add_colums_base = $add_colums;
+
+
+        $foraneas = array();
+        $foraneas['pr_tipo_proceso_id'] = new stdClass();
+
+        $result = $init->foraneas(foraneas: $foraneas,table:  'pr_proceso');
+
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $result);
+        }
+
+        $out->foraneas = $result;
+
+
+
+        return $out;
+    }
     private function pr_etapa_proceso(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -58,15 +93,34 @@ class instalacion
 
     }
 
+    private function pr_proceso(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+
+        $create = $this->_add_pr_proceso(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al agregar tabla', data:  $create);
+        }
+
+        $out->campos = $create;
+
+        return $out;
+
+    }
+
     final public function instala(PDO $link): array|stdClass
     {
         $out = new stdClass();
+
+        $pr_proceso = $this->pr_proceso(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error integrar pr_proceso', data:  $pr_proceso);
+        }
 
         $pr_etapa_proceso = $this->pr_etapa_proceso(link: $link);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error integrar pr_etapa_proceso', data:  $pr_etapa_proceso);
         }
-
 
         return $out;
 
