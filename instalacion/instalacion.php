@@ -43,7 +43,6 @@ class instalacion
 
         return $out;
     }
-
     private function _add_pr_proceso(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -78,6 +77,28 @@ class instalacion
 
         return $out;
     }
+
+    private function _add_pr_tipo_proceso(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $init = (new _instalacion(link: $link));
+
+        $create = $init->create_table_new(table: 'pr_tipo_proceso');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al agregar tabla', data:  $create);
+        }
+        $out->create = $create;
+
+        $columnas = new stdClass();
+        $add_colums = $init->add_columns(campos: $columnas,table:  'pr_tipo_proceso');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al agregar columnas', data:  $add_colums);
+        }
+        $out->add_colums_base = $add_colums;
+
+
+        return $out;
+    }
     private function pr_etapa_proceso(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -108,9 +129,30 @@ class instalacion
 
     }
 
+    private function pr_tipo_proceso(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+
+        $create = $this->_add_pr_tipo_proceso(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al agregar tabla', data:  $create);
+        }
+
+        $out->campos = $create;
+
+        return $out;
+
+    }
+
     final public function instala(PDO $link): array|stdClass
     {
         $out = new stdClass();
+
+        $pr_tipo_proceso = $this->pr_tipo_proceso(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error integrar pr_tipo_proceso', data:  $pr_tipo_proceso);
+        }
+
 
         $pr_proceso = $this->pr_proceso(link: $link);
         if(errores::$error){
