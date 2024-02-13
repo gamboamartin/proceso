@@ -104,6 +104,42 @@ class instalacion
 
         return $out;
     }
+
+    private function _add_pr_sub_proceso(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+        $init = (new _instalacion(link: $link));
+
+        $create = $init->create_table_new(table: 'pr_sub_proceso');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al agregar tabla', data:  $create);
+        }
+        $out->create = $create;
+
+        $columnas = new stdClass();
+        $add_colums = $init->add_columns(campos: $columnas,table:  'pr_sub_proceso');
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al agregar columnas', data:  $add_colums);
+        }
+        $out->add_colums_base = $add_colums;
+
+
+        $foraneas = array();
+        $foraneas['pr_proceso_id'] = new stdClass();
+        $foraneas['adm_seccion_id'] = new stdClass();
+
+        $result = $init->foraneas(foraneas: $foraneas,table:  'pr_sub_proceso');
+
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al ajustar foranea', data:  $result);
+        }
+
+        $out->foraneas = $result;
+
+
+
+        return $out;
+    }
     private function _add_pr_tipo_proceso(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -153,6 +189,21 @@ class instalacion
         return $out;
 
     }
+
+    private function pr_sub_proceso(PDO $link): array|stdClass
+    {
+        $out = new stdClass();
+
+        $create = $this->_add_pr_sub_proceso(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error al agregar tabla', data:  $create);
+        }
+
+        $out->campos = $create;
+
+        return $out;
+
+    }
     private function pr_tipo_proceso(PDO $link): array|stdClass
     {
         $out = new stdClass();
@@ -183,6 +234,11 @@ class instalacion
         $pr_proceso = $this->pr_proceso(link: $link);
         if(errores::$error){
             return (new errores())->error(mensaje: 'Error integrar pr_proceso', data:  $pr_proceso);
+        }
+
+        $pr_sub_proceso = $this->pr_sub_proceso(link: $link);
+        if(errores::$error){
+            return (new errores())->error(mensaje: 'Error integrar pr_sub_proceso', data:  $pr_sub_proceso);
         }
 
         $pr_etapa_proceso = $this->pr_etapa_proceso(link: $link);
