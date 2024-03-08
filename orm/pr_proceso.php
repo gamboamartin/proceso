@@ -161,6 +161,22 @@ class pr_proceso extends _modelo_parent {
         return $data;
     }
 
+    public function elimina_bd(int $id): array|stdClass
+    {
+        $filtro['pr_proceso.id'] = $id;
+        $del = (new pr_etapa_proceso(link: $this->link))->elimina_con_filtro_and(filtro: $filtro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al eliminar pr_etapa_proceso', data: $del);
+        }
+        $elimina_bd = parent::elimina_bd(id: $id);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al eliminar etapa', data: $elimina_bd);
+        }
+
+        return $elimina_bd;
+
+    }
+
     /**
      * Genera el filtro para obtencion de etapa
      * @param string $adm_accion Accion
