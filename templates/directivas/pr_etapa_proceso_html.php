@@ -159,11 +159,12 @@ class pr_etapa_proceso_html extends html_controler {
     }
 
     public function select_pr_etapa_proceso_id(int $cols, bool $con_registros, int $id_selected, PDO $link,
-                                               array $filtro = array(), string $label = 'Etapa proceso'): array|string
+                                               array $columns_ds = array(), array $filtro = array(),
+                                               string $label = 'Etapa proceso'): array|string
     {
         $modelo = new pr_etapa_proceso(link: $link);
         $select = $this->select_catalogo(cols: $cols, con_registros: $con_registros, id_selected: $id_selected,
-            modelo: $modelo, filtro: $filtro, label: $label, required: true);
+            modelo: $modelo, columns_ds: $columns_ds, filtro: $filtro, label: $label, required: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
