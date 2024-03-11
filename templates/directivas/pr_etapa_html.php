@@ -112,12 +112,13 @@ class pr_etapa_html extends html_controler {
         return $selects;
     }
 
-    public function select_pr_etapa_id(int $cols, bool $con_registros, int $id_selected, PDO $link): array|string
+    public function select_pr_etapa_id(int $cols, bool $con_registros, int $id_selected, PDO $link,
+                                       array $filtro = array(), array $registros = array()): array|string
     {
         $modelo = new pr_etapa(link: $link);
 
-        $select = $this->select_catalogo(cols:$cols,con_registros:$con_registros,id_selected:$id_selected,
-            modelo: $modelo, label: 'Etapa',required: true);
+        $select = $this->select_catalogo(cols: $cols, con_registros: $con_registros, id_selected: $id_selected,
+            modelo: $modelo, filtro: $filtro, label: 'Etapa', registros: $registros, required: true);
         if(errores::$error){
             return $this->error->error(mensaje: 'Error al generar select', data: $select);
         }
