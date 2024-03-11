@@ -176,6 +176,7 @@ class pr_proceso extends _modelo_parent {
         return $elimina_bd;
 
     }
+    
 
     final public function etapas(string $pr_proceso_descripcion)
     {
