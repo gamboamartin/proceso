@@ -177,6 +177,16 @@ class pr_proceso extends _modelo_parent {
 
     }
 
+    final public function etapas(string $pr_proceso_descripcion)
+    {
+        $filtro['pr_proceso.descripcion'] = $pr_proceso_descripcion;
+        $r_pr_etapa_proceso = (new pr_etapa_proceso(link: $this->link))->filtro_and(filtro: $filtro);
+        if(errores::$error){
+            return $this->error->error(mensaje: 'Error al obtener etapas', data: $r_pr_etapa_proceso);
+        }
+        return $r_pr_etapa_proceso->registros;
+    }
+
     /**
      * Genera el filtro para obtencion de etapa
      * @param string $adm_accion Accion
