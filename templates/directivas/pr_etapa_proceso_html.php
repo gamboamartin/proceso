@@ -162,7 +162,6 @@ class pr_etapa_proceso_html extends html_controler {
                                                array $filtro = array(), string $label = 'Etapa proceso'): array|string
     {
         $modelo = new pr_etapa_proceso(link: $link);
-
         $select = $this->select_catalogo(cols: $cols, con_registros: $con_registros, id_selected: $id_selected,
             modelo: $modelo, filtro: $filtro, label: $label, required: true);
         if(errores::$error){
