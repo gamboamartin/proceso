@@ -2,6 +2,7 @@
 namespace tests\controllers;
 
 
+use gamboamartin\administrador\instalacion\instalacion;
 use gamboamartin\errores\errores;
 use gamboamartin\proceso\html\pr_entidad_html;
 
@@ -35,6 +36,13 @@ class pr_procesoTest extends test {
         $_SESSION['grupo_id'] = 1;
         $_SESSION['usuario_id'] = 2;
         $_GET['session_id'] = '1';
+
+
+        $instala = (new instalacion())->instala(link: $this->link);
+        if(errores::$error){
+            $error = (new errores())->error(mensaje: 'Error al instala',data:  $instala);
+            print_r($error);exit;
+        }
 
         $modelo = new pr_proceso(link: $this->link);
         $modelo = new liberator($modelo);
