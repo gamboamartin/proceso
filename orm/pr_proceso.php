@@ -62,12 +62,18 @@ class pr_proceso extends _modelo_parent {
 
         if($valida_existencia_etapa) {
             if ((int)$r_pr_etapa_proceso->n_registros === 0) {
-                return $this->error->error(mensaje: 'Error No existe etapa definida', data: $r_pr_etapa_proceso);
+                $data_error = (new stdClass());
+                $data_error->filtro = $filtro;
+                $data_error->r_pr_etapa_proceso = $r_pr_etapa_proceso;
+                return $this->error->error(mensaje: 'Error No existe etapa definida', data: $data_error, es_final: true);
             }
         }
 
         if($r_pr_etapa_proceso->n_registros > 1){
-            return $this->error->error(mensaje: 'Error de integridad conf de etapa', data: $r_pr_etapa_proceso);
+            $data_error = (new stdClass());
+            $data_error->filtro = $filtro;
+            $data_error->r_pr_etapa_proceso = $r_pr_etapa_proceso;
+            return $this->error->error(mensaje: 'Error de integridad conf de etapa', data: $data_error, es_final: true);
         }
         return $r_pr_etapa_proceso;
     }
