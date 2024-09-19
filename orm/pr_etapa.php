@@ -1,9 +1,9 @@
 <?php
 namespace gamboamartin\proceso\models;
-use base\orm\modelo;
+use base\orm\_modelo_parent;
 use PDO;
 
-class pr_etapa extends modelo{
+class pr_etapa extends _modelo_parent{
 
     public function __construct(PDO $link){
         $tabla = 'pr_etapa';
