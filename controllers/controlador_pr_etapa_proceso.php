@@ -130,7 +130,7 @@ class controlador_pr_etapa_proceso extends _ctl_base {
         $keys_selects = $this->init_selects(keys_selects: $keys_selects, key: "pr_etapa_id", label: "Etapa", cols: 12,
             columns_ds: array("pr_etapa_descripcion"));
         return $this->init_selects(keys_selects: $keys_selects, key: "adm_accion_id", label: "Acción", cols: 12,
-            columns_ds: array("adm_accion_descripcion"));
+            columns_ds: array("adm_accion_descripcion_select"));
     }
 
     final public function init_datatable(): stdClass
